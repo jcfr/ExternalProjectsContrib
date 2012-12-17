@@ -15,7 +15,7 @@ if(${add_project})
 
   list(APPEND CTK_DEPENDENCIES ${proj})
 
-  set(${QuaZip_enabling_variable}_LIBRARY_DIRS )
+  set(${QuaZip_enabling_variable}_LIBRARY_DIRS QUAZIP_LIBRARY_DIRS)
   set(${QuaZip_enabling_variable}_INCLUDE_DIRS QUAZIP_INCLUDE_DIRS)
   set(${QuaZip_enabling_variable}_FIND_PACKAGE_CMD QuaZip)
 
@@ -23,16 +23,21 @@ if(${add_project})
 
     if(NOT DEFINED QuaZip_DIR)
 
-      #set(revision_tag "v3.20.0")
-      #if(${proj}_REVISION_TAG)
-      #  set(revision_tag ${${proj}_REVISION_TAG})
-      #endif()
+      set(revision_tag "0.5-patched")
+      if(${proj}_REVISION_TAG)
+        set(revision_tag ${${proj}_REVISION_TAG})
+      endif()
       
       set(location_args )
       if(${proj}_URL)
         set(location_args URL ${${proj}_URL})
+      elseif(${proj}_GIT_REPOSITORY)
+        set(location_args GIT_REPOSITORY ${${proj}_GIT_REPOSITORY}
+                          GIT_TAG ${revision_tag})
       else()
-        set(location_args URL http://heanet.dl.sourceforge.net/project/quazip/quazip/0.5/quazip-0.5.tar.gz)
+        set(location_args GIT_REPOSITORY "${git_protocol}://github.com/saschazelzer/QuaZip.git"
+                          GIT_TAG ${revision_tag})
+        #set(location_args URL http://heanet.dl.sourceforge.net/project/quazip/quazip/0.5/quazip-0.5.tar.gz)
       endif()
       
       set(ep_project_include_arg)
@@ -47,6 +52,7 @@ if(${add_project})
         PREFIX ${proj}${ep_suffix}
         ${location_args}
         UPDATE_COMMAND ""
+        INSTALL_COMMAND ""
         CMAKE_GENERATOR ${gen}
         CMAKE_CACHE_ARGS
           ${ep_common_cache_args}
@@ -55,11 +61,11 @@ if(${add_project})
         DEPENDS
           ${proj_DEPENDENCIES}
         )
-      set(QuaZip_DIR ${ep_install_dir})
+      set(QuaZip_DIR ${CMAKE_CURRENT_BINARY_DIR}/${proj}-build)
 
       # Since the link directories associated with QuaZip is used, it makes sense to
       # update CTK_EXTERNAL_LIBRARY_DIRS with its associated library output directory
-      list(APPEND CTK_EXTERNAL_LIBRARY_DIRS ${QuaZip_DIR}/lib)
+      list(APPEND CTK_EXTERNAL_LIBRARY_DIRS ${QuaZip_DIR})
 
     else()
       ctkMacroEmptyExternalproject(${proj} "${proj_DEPENDENCIES}")
