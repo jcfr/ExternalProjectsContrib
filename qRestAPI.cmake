@@ -37,7 +37,7 @@ if(${add_project})
       else()
         set(location_args GIT_REPOSITORY "${git_protocol}://github.com/commontk/qRestAPI.git"
                           GIT_TAG ${revision_tag})
-        #set(location_args URL http://heanet.dl.sourceforge.net/project/quazip/quazip/0.5/quazip-0.5.tar.gz)
+        #set(location_args URL ....tar.gz)
       endif()
       
       set(ep_project_include_arg)
