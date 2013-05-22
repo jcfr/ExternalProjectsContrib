@@ -1,29 +1,29 @@
 #
 # qRestAPI
 #
-ctkMacroShouldAddExternalproject(QRESTAPI_LIBRARIES add_project)
+ctkMacroShouldAddExternalproject(qRestAPI_LIBRARIES add_project)
 if(${add_project})
   # Sanity checks
   if(DEFINED qRestAPI_DIR AND NOT EXISTS ${qRestAPI_DIR})
     message(FATAL_ERROR "qRestAPI_DIR variable is defined but corresponds to non-existing directory")
   endif()
 
-  set(qRestAPI_enabling_variable QRESTAPI_LIBRARIES)
+  set(qRestAPI_enabling_variable qRestAPI_LIBRARIES)
 
   set(proj qRestAPI)
   set(proj_DEPENDENCIES)
 
   list(APPEND CTK_DEPENDENCIES ${proj})
 
-  set(${qRestAPI_enabling_variable}_LIBRARY_DIRS QRESTAPI_LIBRARY_DIRS)
-  set(${qRestAPI_enabling_variable}_INCLUDE_DIRS QRESTAPI_INCLUDE_DIRS)
+  set(${qRestAPI_enabling_variable}_LIBRARY_DIRS qRestAPI_LIBRARY_DIRS)
+  set(${qRestAPI_enabling_variable}_INCLUDE_DIRS qRestAPI_INCLUDE_DIRS)
   set(${qRestAPI_enabling_variable}_FIND_PACKAGE_CMD qRestAPI)
 
   if(CTK_SUPERBUILD)
 
     if(NOT DEFINED qRestAPI_DIR)
 
-      set(revision_tag "d83b683b1c")
+      set(revision_tag "e71c0d625dd")
       if(${proj}_REVISION_TAG)
         set(revision_tag ${${proj}_REVISION_TAG})
       endif()
