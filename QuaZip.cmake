@@ -2,7 +2,7 @@
 # QuaZip
 #
 
-ctk_include_once()
+superbuild_include_once()
 
 set(QuaZip_enabling_variable QUAZIP_LIBRARIES)
 

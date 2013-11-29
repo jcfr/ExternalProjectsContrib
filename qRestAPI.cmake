@@ -2,7 +2,7 @@
 # qRestAPI
 #
 
-ctk_include_once()
+superbuild_include_once()
 
 set(qRestAPI_enabling_variable qRestAPI_LIBRARIES)
 set(${qRestAPI_enabling_variable}_LIBRARY_DIRS qRestAPI_LIBRARY_DIRS)
