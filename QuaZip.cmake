@@ -4,18 +4,16 @@
 
 superbuild_include_once()
 
-set(QuaZip_enabling_variable QUAZIP_LIBRARIES)
-
 set(proj QuaZip)
-set(proj_DEPENDENCIES)
 
-set(${QuaZip_enabling_variable}_LIBRARY_DIRS QUAZIP_LIBRARY_DIRS)
-set(${QuaZip_enabling_variable}_INCLUDE_DIRS QUAZIP_INCLUDE_DIRS)
-set(${QuaZip_enabling_variable}_FIND_PACKAGE_CMD QuaZip)
+set(${proj}_enabling_variable QUAZIP_LIBRARIES)
+set(${${proj}_enabling_variable}_LIBRARY_DIRS QUAZIP_LIBRARY_DIRS)
+set(${${proj}_enabling_variable}_INCLUDE_DIRS QUAZIP_INCLUDE_DIRS)
+set(${${proj}_enabling_variable}_FIND_PACKAGE_CMD QuaZip)
 
-set(QuaZip_DEPENDENCIES "")
+set(${proj}_DEPENDENCIES "")
 
-superbuild_include_dependencies(QuaZip)
+superbuild_include_dependencies(${proj})
 set(proj QuaZip)
 
 if(${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
@@ -74,7 +72,7 @@ if(NOT DEFINED QuaZip_DIR)
   list(APPEND CTK_EXTERNAL_LIBRARY_DIRS ${QuaZip_DIR})
 
 else()
-  superbuild_add_empty_external_project(${proj} "${proj_DEPENDENCIES}")
+  superbuild_add_empty_external_project(${proj} "${${proj}_DEPENDENCIES}")
 endif()
 
 mark_as_superbuild(

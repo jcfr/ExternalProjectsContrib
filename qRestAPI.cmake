@@ -4,15 +4,16 @@
 
 superbuild_include_once()
 
-set(qRestAPI_enabling_variable qRestAPI_LIBRARIES)
-set(${qRestAPI_enabling_variable}_LIBRARY_DIRS qRestAPI_LIBRARY_DIRS)
-set(${qRestAPI_enabling_variable}_INCLUDE_DIRS qRestAPI_INCLUDE_DIRS)
-set(${qRestAPI_enabling_variable}_FIND_PACKAGE_CMD qRestAPI)
-
-set(qRestAPI_DEPENDENCIES "")
-
-superbuild_include_dependencies(qRestAPI)
 set(proj qRestAPI)
+
+set(${proj}_enabling_variable qRestAPI_LIBRARIES)
+set(${${proj}_enabling_variable}_LIBRARY_DIRS qRestAPI_LIBRARY_DIRS)
+set(${${proj}_enabling_variable}_INCLUDE_DIRS qRestAPI_INCLUDE_DIRS)
+set(${${proj}_enabling_variable}_FIND_PACKAGE_CMD qRestAPI)
+
+set(${proj}_DEPENDENCIES "")
+
+superbuild_include_dependencies(${proj})
 
 if(${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   message(FATAL_ERROR "Enabling ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj} is not supported !")
@@ -70,7 +71,7 @@ if(NOT DEFINED qRestAPI_DIR)
   list(APPEND CTK_EXTERNAL_LIBRARY_DIRS ${qRestAPI_DIR})
 
 else()
-  superbuild_add_empty_external_project(${proj} "${proj_DEPENDENCIES}")
+  superbuild_add_empty_external_project(${proj} "${${proj}_DEPENDENCIES}")
 endif()
 
 mark_as_superbuild(
