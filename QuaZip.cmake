@@ -15,7 +15,7 @@ set(${QuaZip_enabling_variable}_FIND_PACKAGE_CMD QuaZip)
 
 set(QuaZip_DEPENDENCIES "")
 
-ctkMacroCheckExternalProjectDependency(QuaZip)
+superbuild_include_dependencies(QuaZip)
 set(proj QuaZip)
 
 if(${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
@@ -74,8 +74,11 @@ if(NOT DEFINED QuaZip_DIR)
   list(APPEND CTK_EXTERNAL_LIBRARY_DIRS ${QuaZip_DIR})
 
 else()
-  ctkMacroEmptyExternalproject(${proj} "${proj_DEPENDENCIES}")
+  superbuild_add_empty_external_project(${proj} "${proj_DEPENDENCIES}")
 endif()
 
-list(APPEND CTK_SUPERBUILD_EP_VARS QuaZip_DIR:PATH)
+mark_as_superbuild(
+  VARS QuaZip_DIR:PATH
+  LABELS "FIND_PACKAGE"
+  )
 

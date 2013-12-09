@@ -11,7 +11,7 @@ set(${qRestAPI_enabling_variable}_FIND_PACKAGE_CMD qRestAPI)
 
 set(qRestAPI_DEPENDENCIES "")
 
-ctkMacroCheckExternalProjectDependency(qRestAPI)
+superbuild_include_dependencies(qRestAPI)
 set(proj qRestAPI)
 
 if(${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
@@ -70,8 +70,11 @@ if(NOT DEFINED qRestAPI_DIR)
   list(APPEND CTK_EXTERNAL_LIBRARY_DIRS ${qRestAPI_DIR})
 
 else()
-  ctkMacroEmptyExternalproject(${proj} "${proj_DEPENDENCIES}")
+  superbuild_add_empty_external_project(${proj} "${proj_DEPENDENCIES}")
 endif()
 
-list(APPEND CTK_SUPERBUILD_EP_VARS qRestAPI_DIR:PATH)
+mark_as_superbuild(
+  VARS qRestAPI_DIR:PATH
+  LABELS "FIND_PACKAGE"
+  )
 
