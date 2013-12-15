@@ -2,8 +2,6 @@
 # qRestAPI
 #
 
-superbuild_include_once()
-
 set(proj qRestAPI)
 
 set(${proj}_enabling_variable qRestAPI_LIBRARIES)
@@ -13,7 +11,12 @@ set(${${proj}_enabling_variable}_FIND_PACKAGE_CMD qRestAPI)
 
 set(${proj}_DEPENDENCIES "")
 
-superbuild_include_dependencies(PROJECT_VAR proj)
+ExternalProject_Include_Dependencies(${proj}
+  PROJECT_VAR proj
+  DEPENDS_VAR ${proj}_DEPENDENCIES
+  EP_ARGS_VAR ${proj}_EXTERNAL_PROJECT_ARGS
+  USE_SYSTEM_VAR ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj}
+  )
 
 if(${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   message(FATAL_ERROR "Enabling ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj} is not supported !")
@@ -50,6 +53,7 @@ if(NOT DEFINED qRestAPI_DIR)
   #endif()
 
   ExternalProject_Add(${proj}
+    ${${proj}_EXTERNAL_PROJECT_ARGS}
     SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}
     BINARY_DIR ${proj}-build
     PREFIX ${proj}${ep_suffix}
@@ -62,16 +66,12 @@ if(NOT DEFINED qRestAPI_DIR)
       ${ep_project_include_arg}
       -DQT_QMAKE_EXECUTABLE:FILEPATH=${QT_QMAKE_EXECUTABLE}
     DEPENDS
-      ${proj_DEPENDENCIES}
+      ${${proj}_DEPENDENCIES}
     )
   set(qRestAPI_DIR ${CMAKE_CURRENT_BINARY_DIR}/${proj}-build)
 
-  # Since the link directories associated with qRestAPI is used, it makes sense to
-  # update CTK_EXTERNAL_LIBRARY_DIRS with its associated library output directory
-  list(APPEND CTK_EXTERNAL_LIBRARY_DIRS ${qRestAPI_DIR})
-
 else()
-  superbuild_add_empty_external_project(${proj} "${${proj}_DEPENDENCIES}")
+  ExternalProject_Add_Empty(${proj} DEPENDS ${${proj}_DEPENDENCIES})
 endif()
 
 mark_as_superbuild(
